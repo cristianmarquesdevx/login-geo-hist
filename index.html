@@ -1,0 +1,1459 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Simulado IBADE</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-color: #1a5f7a;
+        --primary-dark: #0d3d4f;
+        --primary-light: #2a7a9c;
+        --secondary-color: #57cc99;
+        --secondary-dark: #2fa874;
+        --accent-color: #ffd166;
+        --accent-dark: #ffc233;
+        --danger-color: #ef476f;
+        --reset-color: #e17055;
+        --reset-dark: #d63031;
+        --light-color: #f8f9fa;
+        --dark-color: #262626;
+        --gray-color: #6c757d;
+        --shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        --border-radius: 12px;
+        --transition: all 0.3s ease;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #0d3d4f 0%, #1a5f7a 100%);
+        color: var(--dark-color);
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.03)"/></svg>');
+        background-size: cover;
+        z-index: -1;
+      }
+
+      .container {
+        max-width: 450px;
+        width: 100%;
+      }
+
+      .login-card {
+        background-color: white;
+        border-radius: var(--border-radius);
+        padding: 40px;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        border-top: 5px solid var(--accent-color);
+        position: relative;
+        overflow: hidden;
+        animation: fadeIn 0.8s ease;
+      }
+
+      .login-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color) 0%,
+          var(--secondary-color) 100%
+        );
+      }
+
+      .login-header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+
+      .logo-icon {
+        background-color: var(--primary-color);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: var(--accent-color);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .logo-text h1 {
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.9rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+        letter-spacing: -0.5px;
+        color: var(--primary-color);
+      }
+
+      .logo-text .subtitle {
+        font-size: 1.1rem;
+        opacity: 0.8;
+        font-weight: 300;
+        color: var(--gray-color);
+      }
+
+      .dev-badge {
+        background: linear-gradient(
+          135deg,
+          var(--accent-color) 0%,
+          #ffb347 100%
+        );
+        color: var(--dark-color);
+        padding: 12px 20px;
+        border-radius: 50px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        box-shadow: 0 5px 15px rgba(255, 209, 102, 0.3);
+        margin-top: 15px;
+        transition: var(--transition);
+        cursor: default;
+      }
+
+      .dev-badge:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(255, 209, 102, 0.4);
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--primary-color);
+        font-size: 0.95rem;
+      }
+
+      .input-group {
+        position: relative;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 15px 20px;
+        border: 2px solid #e9ecef;
+        border-radius: var(--border-radius);
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+        transition: var(--transition);
+        background-color: #f8f9fa;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        background-color: white;
+        box-shadow: 0 0 0 3px rgba(26, 95, 122, 0.1);
+      }
+
+      .input-icon {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray-color);
+        transition: var(--transition);
+      }
+
+      .form-control:focus + .input-icon {
+        color: var(--primary-color);
+      }
+
+      .form-control.error {
+        border-color: var(--danger-color);
+      }
+
+      .error-message {
+        color: var(--danger-color);
+        font-size: 0.85rem;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .error-message.show {
+        display: block;
+      }
+
+      .login-btn {
+        width: 100%;
+        padding: 17px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-color) 0%,
+          var(--primary-light) 100%
+        );
+        color: white;
+        border: none;
+        border-radius: var(--border-radius);
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+        box-shadow: 0 5px 15px rgba(26, 95, 122, 0.2);
+      }
+
+      .login-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(26, 95, 122, 0.3);
+      }
+
+      .login-btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      .divider {
+        display: flex;
+        align-items: center;
+        margin: 25px 0;
+        color: var(--gray-color);
+      }
+
+      .divider::before,
+      .divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background-color: #e9ecef;
+      }
+
+      .divider span {
+        padding: 0 15px;
+        font-size: 0.9rem;
+      }
+
+      .admin-login-btn {
+        width: 100%;
+        padding: 17px;
+        background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+        color: white;
+        border: none;
+        border-radius: var(--border-radius);
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        box-shadow: 0 5px 15px rgba(108, 92, 231, 0.2);
+      }
+
+      .admin-login-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
+      }
+
+      .security-info {
+        margin-top: 25px;
+        padding: 20px;
+        background-color: rgba(26, 95, 122, 0.05);
+        border-radius: var(--border-radius);
+        border-left: 4px solid var(--secondary-color);
+      }
+
+      .security-info h4 {
+        color: var(--primary-color);
+        margin-bottom: 10px;
+        font-family: "Montserrat", sans-serif;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .security-info ul {
+        padding-left: 20px;
+        font-size: 0.9rem;
+        color: var(--gray-color);
+      }
+
+      .security-info li {
+        margin-bottom: 8px;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #e9ecef;
+        color: var(--gray-color);
+        font-size: 0.9rem;
+      }
+
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        padding: 20px;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s ease;
+        backdrop-filter: blur(5px);
+      }
+
+      .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal {
+        background-color: white;
+        border-radius: var(--border-radius);
+        width: 100%;
+        max-width: 500px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        transform: translateY(30px) scale(0.95);
+        transition: transform 0.5s ease;
+      }
+
+      .modal-overlay.active .modal {
+        transform: translateY(0) scale(1);
+      }
+
+      .modal-header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color) 0%,
+          var(--primary-dark) 100%
+        );
+        color: white;
+        padding: 25px 30px;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .modal-header h2 {
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+      }
+
+      .close-modal {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+        line-height: 1;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+      }
+
+      .close-modal:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(90deg);
+      }
+
+      .modal-body {
+        padding: 30px;
+      }
+
+      .users-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+        margin-top: 15px;
+      }
+
+      .user-card {
+        background: #f8f9fa;
+        border-radius: var(--border-radius);
+        padding: 20px;
+        text-align: center;
+        transition: var(--transition);
+        border: 2px solid transparent;
+        cursor: pointer;
+      }
+
+      .user-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary-color);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .user-card.selected {
+        border-color: var(--secondary-color);
+        background-color: rgba(87, 204, 153, 0.1);
+      }
+
+      .user-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--primary-color) 0%,
+          var(--primary-light) 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        color: white;
+        font-size: 1.5rem;
+      }
+
+      .user-name {
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 5px;
+      }
+
+      .user-role {
+        font-size: 0.85rem;
+        color: var(--gray-color);
+        background-color: rgba(0, 0, 0, 0.05);
+        padding: 3px 10px;
+        border-radius: 20px;
+        display: inline-block;
+      }
+
+      .admin-card {
+        background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+        color: white;
+      }
+
+      .admin-card .user-icon {
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .admin-card .user-name {
+        color: white;
+      }
+
+      .admin-card .user-role {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
+      }
+
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: var(--border-radius);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        z-index: 9999;
+        box-shadow: var(--shadow);
+        animation: slideIn 0.3s ease;
+        max-width: 400px;
+        font-weight: 500;
+      }
+
+      .notification-success {
+        background: var(--secondary-color);
+        color: white;
+      }
+
+      .notification-error {
+        background: var(--danger-color);
+        color: white;
+      }
+
+      .notification-info {
+        background: var(--primary-color);
+        color: white;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .password-toggle {
+        position: absolute;
+        right: 50px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--gray-color);
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .password-toggle:hover {
+        color: var(--primary-color);
+      }
+
+      .loading {
+        display: none;
+      }
+
+      .loading.active {
+        display: inline-block;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .attempts-warning {
+        color: var(--danger-color);
+        font-size: 0.9rem;
+        margin-top: 10px;
+        text-align: center;
+        display: none;
+      }
+
+      .attempts-warning.show {
+        display: block;
+      }
+
+      @media (max-width: 480px) {
+        .login-card {
+          padding: 30px 20px;
+        }
+        
+        .logo {
+          flex-direction: column;
+          text-align: center;
+        }
+        
+        .logo-text h1 {
+          font-size: 1.6rem;
+        }
+        
+        .users-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>SIMULADO IBADE</h1>
+                        <div class="subtitle">
+                            História e Geografia de Rondônia
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dev-badge">
+                    <i class="fas fa-code"></i>
+                    <span>Sistema de Login Seguro</span>
+                </div>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="username">
+                        <i class="fas fa-user"></i> Nome de Usuário
+                    </label>
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="username" 
+                            class="form-control" 
+                            placeholder="Digite seu nome de usuário"
+                            autocomplete="username"
+                            required
+                        />
+                        <i class="fas fa-user input-icon"></i>
+                    </div>
+                    <div class="error-message" id="usernameError">
+                        Por favor, insira um nome de usuário válido
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">
+                        <i class="fas fa-lock"></i> Senha
+                    </label>
+                    <div class="input-group">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            class="form-control" 
+                            placeholder="Digite sua senha"
+                            autocomplete="current-password"
+                            required
+                        />
+                        <button type="button" class="password-toggle" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <i class="fas fa-lock input-icon"></i>
+                    </div>
+                    <div class="error-message" id="passwordError">
+                        Por favor, insira sua senha
+                    </div>
+                </div>
+
+                <div class="attempts-warning" id="attemptsWarning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Tentativas restantes: <span id="remainingAttempts">3</span>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginButton">
+                    <span id="buttonText">Entrar no Simulado</span>
+                    <i class="fas fa-sign-in-alt"></i>
+                    <i class="fas fa-spinner loading" id="loadingIcon"></i>
+                </button>
+            </form>
+
+            <div class="divider">
+                <span>OU</span>
+            </div>
+
+            <button class="admin-login-btn" id="adminLoginButton">
+                <i class="fas fa-user-shield"></i>
+                Acesso Administrativo
+            </button>
+
+            <div class="security-info">
+                <h4><i class="fas fa-shield-alt"></i> Segurança do Sistema</h4>
+                <ul>
+                    <li>Autenticação com token JWT</li>
+                    <li>Proteção contra ataques de força bruta</li>
+                    <li>Criptografia de senhas</li>
+                    <li>Controle de sessão por usuário</li>
+                </ul>
+            </div>
+
+            <div class="footer">
+                <p>
+                    &copy; 2023 Cristian Marques. Todos os direitos reservados.<br>
+                    Sistema desenvolvido com padrões de segurança avançados.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Seleção de Usuário -->
+    <div class="modal-overlay" id="userModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-users"></i> Selecionar Usuário</h2>
+                <button class="close-modal" id="closeUserModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Selecione um usuário para acessar o sistema como cliente:</p>
+                <div class="users-grid" id="usersGrid">
+                    <!-- Usuários serão gerados dinamicamente aqui -->
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="login-btn" id="selectUserButton" style="max-width: 200px;">
+                        <i class="fas fa-check"></i> Selecionar Usuário
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Login Administrativo -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-shield"></i> Acesso Administrativo</h2>
+                <button class="close-modal" id="closeAdminModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Insira as credenciais de administrador:</p>
+                
+                <div class="form-group">
+                    <label class="form-label" for="adminUsername">
+                        <i class="fas fa-user-cog"></i> Usuário Administrador
+                    </label>
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="adminUsername" 
+                            class="form-control" 
+                            placeholder="admin"
+                            autocomplete="username"
+                        />
+                        <i class="fas fa-user-cog input-icon"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="adminPassword">
+                        <i class="fas fa-key"></i> Senha de Administrador
+                    </label>
+                    <div class="input-group">
+                        <input 
+                            type="password" 
+                            id="adminPassword" 
+                            class="form-control" 
+                            placeholder="Digite a senha de administrador"
+                            autocomplete="current-password"
+                        />
+                        <button type="button" class="password-toggle" id="toggleAdminPassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <i class="fas fa-key input-icon"></i>
+                    </div>
+                </div>
+
+                <div class="attempts-warning" id="adminAttemptsWarning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Tentativas restantes: <span id="adminRemainingAttempts">3</span>
+                </div>
+
+                <button class="admin-login-btn" id="adminSubmitButton" style="width: 100%;">
+                    <span id="adminButtonText">Acessar Painel Admin</span>
+                    <i class="fas fa-sign-in-alt"></i>
+                    <i class="fas fa-spinner loading" id="adminLoadingIcon"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Banco de dados de usuários (em produção, isso viria de um servidor seguro)
+        const usersDatabase = {
+            // Administrador único
+            admin: {
+                password: "AdminSecurePass2023!@#", // Em produção, isso seria um hash
+                role: "admin",
+                name: "Administrador do Sistema",
+                email: "admin@simuladoibade.com"
+            },
+            
+            // Usuários clientes (em produção, seriam carregados de um banco de dados)
+            clientes: [
+                {
+                    id: "user001",
+                    username: "josineide",
+                    password: "93281072", // Em produção, isso seria um hash
+                    name: "Josineide Moza Sodré",
+                    role: "aluno",
+                    email: "#"
+                },
+                // Adicione mais usuários conforme necessário
+                {
+                    id: "user002",
+                    username: "cristian",
+                    password: "dev123",
+                    name: "Cristian Marques",
+                    role: "desenvolvedor",
+                    email: "contato@cristianmarques.dev"
+                }
+            ]
+        };
+
+        // Configurações de segurança
+        const SECURITY_CONFIG = {
+            MAX_LOGIN_ATTEMPTS: 3,
+            LOCKOUT_TIME: 300000, // 5 minutos em milissegundos
+            TOKEN_EXPIRY: 3600000, // 1 hora em milissegundos
+            SESSION_TIMEOUT: 1800000, // 30 minutos em milissegundos
+            JWT_SECRET: "SimuladoIBADE2023@SecureToken#JWTKey$ForRondonia",
+            PASSWORD_MIN_LENGTH: 8
+        };
+
+        // Estado da aplicação
+        let loginAttempts = 0;
+        let adminLoginAttempts = 0;
+        let isLocked = false;
+        let lockoutTimeout = null;
+        let selectedUser = null;
+        let sessionTimer = null;
+
+        // Elementos DOM
+        const loginForm = document.getElementById("loginForm");
+        const usernameInput = document.getElementById("username");
+        const passwordInput = document.getElementById("password");
+        const loginButton = document.getElementById("loginButton");
+        const togglePassword = document.getElementById("togglePassword");
+        const adminLoginButton = document.getElementById("adminLoginButton");
+        const userModal = document.getElementById("userModal");
+        const adminModal = document.getElementById("adminModal");
+        const usersGrid = document.getElementById("usersGrid");
+        const selectUserButton = document.getElementById("selectUserButton");
+        const adminSubmitButton = document.getElementById("adminSubmitButton");
+        const adminUsernameInput = document.getElementById("adminUsername");
+        const adminPasswordInput = document.getElementById("adminPassword");
+        const toggleAdminPassword = document.getElementById("toggleAdminPassword");
+        const attemptsWarning = document.getElementById("attemptsWarning");
+        const remainingAttempts = document.getElementById("remainingAttempts");
+        const adminAttemptsWarning = document.getElementById("adminAttemptsWarning");
+        const adminRemainingAttempts = document.getElementById("adminRemainingAttempts");
+        const loadingIcon = document.getElementById("loadingIcon");
+        const buttonText = document.getElementById("buttonText");
+        const adminLoadingIcon = document.getElementById("adminLoadingIcon");
+        const adminButtonText = document.getElementById("adminButtonText");
+
+        // Inicialização
+        document.addEventListener("DOMContentLoaded", () => {
+            initializeApp();
+            checkExistingSession();
+        });
+
+        function initializeApp() {
+            // Event listeners
+            loginForm.addEventListener("submit", handleLogin);
+            togglePassword.addEventListener("click", () => togglePasswordVisibility(passwordInput, togglePassword));
+            adminLoginButton.addEventListener("click", showAdminModal);
+            selectUserButton.addEventListener("click", handleUserSelection);
+            adminSubmitButton.addEventListener("click", handleAdminLogin);
+            toggleAdminPassword.addEventListener("click", () => togglePasswordVisibility(adminPasswordInput, toggleAdminPassword));
+            
+            // Fechar modais
+            document.getElementById("closeUserModal").addEventListener("click", () => {
+                userModal.classList.remove("active");
+            });
+            
+            document.getElementById("closeAdminModal").addEventListener("click", () => {
+                adminModal.classList.remove("active");
+            });
+            
+            // Fechar modais clicando fora
+            userModal.addEventListener("click", (e) => {
+                if (e.target === userModal) {
+                    userModal.classList.remove("active");
+                }
+            });
+            
+            adminModal.addEventListener("click", (e) => {
+                if (e.target === adminModal) {
+                    adminModal.classList.remove("active");
+                }
+            });
+            
+            // Preencher grid de usuários
+            populateUsersGrid();
+            
+            // Teclas de atalho
+            document.addEventListener("keydown", handleKeyDown);
+            
+            // Verificar se há tentativas bloqueadas no localStorage
+            checkLockoutStatus();
+        }
+
+        function checkLockoutStatus() {
+            const lockoutData = localStorage.getItem("loginLockout");
+            if (lockoutData) {
+                const { timestamp } = JSON.parse(lockoutData);
+                const timePassed = Date.now() - timestamp;
+                
+                if (timePassed < SECURITY_CONFIG.LOCKOUT_TIME) {
+                    isLocked = true;
+                    const remainingTime = Math.ceil((SECURITY_CONFIG.LOCKOUT_TIME - timePassed) / 1000 / 60);
+                    showNotification(`Sistema bloqueado por ${remainingTime} minutos devido a muitas tentativas falhas.`, "error");
+                    
+                    // Configurar desbloqueio automático
+                    setTimeout(() => {
+                        isLocked = false;
+                        localStorage.removeItem("loginLockout");
+                        showNotification("Sistema desbloqueado. Você pode tentar fazer login novamente.", "info");
+                    }, SECURITY_CONFIG.LOCKOUT_TIME - timePassed);
+                } else {
+                    localStorage.removeItem("loginLockout");
+                }
+            }
+            
+            // Carregar tentativas anteriores
+            const attemptsData = localStorage.getItem("loginAttempts");
+            if (attemptsData) {
+                loginAttempts = parseInt(attemptsData) || 0;
+                if (loginAttempts > 0) {
+                    updateAttemptsWarning();
+                }
+            }
+        }
+
+        function handleKeyDown(e) {
+            // Ctrl+Alt+A para acesso administrativo rápido
+            if (e.ctrlKey && e.altKey && e.key === 'a') {
+                e.preventDefault();
+                showAdminModal();
+            }
+            
+            // Escape para fechar modais
+            if (e.key === 'Escape') {
+                if (userModal.classList.contains('active')) {
+                    userModal.classList.remove('active');
+                }
+                if (adminModal.classList.contains('active')) {
+                    adminModal.classList.remove('active');
+                }
+            }
+        }
+
+        function populateUsersGrid() {
+            usersGrid.innerHTML = '';
+            
+            usersDatabase.clientes.forEach((user, index) => {
+                const userCard = document.createElement('div');
+                userCard.className = 'user-card';
+                userCard.dataset.userId = user.id;
+                userCard.dataset.index = index;
+                
+                const roleText = user.role === 'aluno' ? 'Aluno' : 
+                                user.role === 'professor' ? 'Professor' : 
+                                user.role === 'coordenador' ? 'Coordenador' : 
+                                user.role === 'desenvolvedor' ? 'Desenvolvedor' : 'Usuário';
+                
+                userCard.innerHTML = `
+                    <div class="user-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-name">${user.name}</div>
+                    <div class="user-role">${roleText}</div>
+                `;
+                
+                userCard.addEventListener('click', () => {
+                    // Remover seleção anterior
+                    document.querySelectorAll('.user-card').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                    
+                    // Selecionar novo usuário
+                    userCard.classList.add('selected');
+                    selectedUser = user;
+                });
+                
+                usersGrid.appendChild(userCard);
+            });
+        }
+
+        function showAdminModal() {
+            adminModal.classList.add('active');
+            adminUsernameInput.focus();
+        }
+
+        function togglePasswordVisibility(passwordField, toggleButton) {
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            
+            // Alterar ícone
+            const icon = toggleButton.querySelector('i');
+            icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            if (isLocked) {
+                showNotification('Sistema temporariamente bloqueado devido a muitas tentativas falhas.', 'error');
+                return;
+            }
+            
+            // Validação básica
+            let isValid = true;
+            
+            if (!usernameInput.value.trim()) {
+                showError(usernameInput, 'usernameError');
+                isValid = false;
+            } else {
+                clearError(usernameInput, 'usernameError');
+            }
+            
+            if (!passwordInput.value.trim()) {
+                showError(passwordInput, 'passwordError');
+                isValid = false;
+            } else {
+                clearError(passwordInput, 'passwordError');
+            }
+            
+            if (!isValid) return;
+            
+            // Verificar se é um usuário cliente
+            const enteredUsername = usernameInput.value.trim();
+            const enteredPassword = passwordInput.value.trim();
+            
+            // Primeiro, verificar se é um usuário cliente
+            const user = usersDatabase.clientes.find(u => 
+                u.username.toLowerCase() === enteredUsername.toLowerCase()
+            );
+            
+            if (user) {
+                // Verificar senha
+                if (user.password === enteredPassword) {
+                    // Login bem-sucedido
+                    simulateLogin(user);
+                } else {
+                    handleFailedLogin();
+                }
+            } else {
+                // Se não for cliente, verificar se é admin
+                if (enteredUsername === 'admin') {
+                    showAdminModal();
+                } else {
+                    showNotification('Usuário não encontrado. Verifique suas credenciais.', 'error');
+                }
+            }
+        }
+
+        function handleUserSelection() {
+            if (!selectedUser) {
+                showNotification('Por favor, selecione um usuário primeiro.', 'error');
+                return;
+            }
+            
+            // Verificar senha para o usuário selecionado
+            const enteredPassword = passwordInput.value.trim();
+            
+            if (selectedUser.password === enteredPassword) {
+                simulateLogin(selectedUser);
+            } else {
+                handleFailedLogin();
+            }
+        }
+
+        function simulateLogin(user) {
+            // Mostrar loading
+            loginButton.disabled = true;
+            loadingIcon.classList.add('active');
+            buttonText.textContent = 'Autenticando...';
+            
+            // Simular delay de rede
+            setTimeout(() => {
+                // Resetar tentativas em caso de sucesso
+                loginAttempts = 0;
+                localStorage.removeItem("loginAttempts");
+                updateAttemptsWarning();
+                
+                // Gerar token JWT
+                const token = generateJWT({
+                    userId: user.id,
+                    username: user.username,
+                    name: user.name,
+                    role: user.role,
+                    email: user.email
+                });
+                
+                // Criar sessão
+                createUserSession(user, token);
+                
+                // Redirecionar para o simulado com token
+                redirectToSimulado(token);
+                
+            }, 1500);
+        }
+
+        function handleFailedLogin() {
+            loginAttempts++;
+            localStorage.setItem("loginAttempts", loginAttempts.toString());
+            
+            // Atualizar aviso de tentativas
+            updateAttemptsWarning();
+            
+            showNotification('Credenciais inválidas. Tente novamente.', 'error');
+            
+            // Resetar botão
+            loginButton.disabled = false;
+            loadingIcon.classList.remove('active');
+            buttonText.textContent = 'Entrar no Simulado';
+            
+            // Verificar bloqueio
+            if (loginAttempts >= SECURITY_CONFIG.MAX_LOGIN_ATTEMPTS) {
+                // Bloquear sistema
+                isLocked = true;
+                localStorage.setItem("loginLockout", JSON.stringify({
+                    timestamp: Date.now()
+                }));
+                
+                showNotification(`Máximo de tentativas excedido. Sistema bloqueado por ${SECURITY_CONFIG.LOCKOUT_TIME / 1000 / 60} minutos.`, 'error');
+                
+                // Configurar desbloqueio automático
+                setTimeout(() => {
+                    isLocked = false;
+                    localStorage.removeItem("loginLockout");
+                    loginAttempts = 0;
+                    localStorage.removeItem("loginAttempts");
+                    updateAttemptsWarning();
+                    showNotification('Sistema desbloqueado. Você pode tentar fazer login novamente.', 'info');
+                }, SECURITY_CONFIG.LOCKOUT_TIME);
+            }
+        }
+
+        function handleAdminLogin() {
+            const adminUsername = adminUsernameInput.value.trim();
+            const adminPassword = adminPasswordInput.value.trim();
+            
+            if (!adminUsername || !adminPassword) {
+                showNotification('Por favor, preencha todos os campos.', 'error');
+                return;
+            }
+            
+            // Verificar credenciais de administrador
+            if (adminUsername !== 'admin' || adminPassword !== usersDatabase.admin.password) {
+                adminLoginAttempts++;
+                
+                // Atualizar aviso de tentativas
+                const remainingAdminAttempts = SECURITY_CONFIG.MAX_LOGIN_ATTEMPTS - adminLoginAttempts;
+                adminRemainingAttempts.textContent = remainingAdminAttempts;
+                
+                if (adminLoginAttempts >= SECURITY_CONFIG.MAX_LOGIN_ATTEMPTS) {
+                    adminAttemptsWarning.classList.add('show');
+                    showNotification('Máximo de tentativas administrativas excedido. Contate o suporte.', 'error');
+                    adminSubmitButton.disabled = true;
+                    return;
+                }
+                
+                adminAttemptsWarning.classList.add('show');
+                showNotification(`Credenciais de administrador inválidas. Tentativas restantes: ${remainingAdminAttempts}`, 'error');
+                return;
+            }
+            
+            // Mostrar loading
+            adminSubmitButton.disabled = true;
+            adminLoadingIcon.classList.add('active');
+            adminButtonText.textContent = 'Acessando...';
+            
+            // Simular delay de autenticação
+            setTimeout(() => {
+                // Gerar token JWT para administrador
+                const adminToken = generateJWT({
+                    userId: 'admin001',
+                    username: 'admin',
+                    name: usersDatabase.admin.name,
+                    role: 'admin',
+                    email: usersDatabase.admin.email,
+                    isAdmin: true
+                });
+                
+                // Criar sessão administrativa
+                createAdminSession(adminToken);
+                
+                // Redirecionar para painel administrativo
+                redirectToAdminPanel(adminToken);
+                
+            }, 1500);
+        }
+
+        function generateJWT(payload) {
+            // Em produção, usar biblioteca como jsonwebtoken
+            // Esta é uma implementação simplificada para demonstração
+            
+            const header = {
+                alg: "HS256",
+                typ: "JWT"
+            };
+            
+            // Adicionar timestamp de expiração
+            payload.exp = Date.now() + SECURITY_CONFIG.TOKEN_EXPIRY;
+            payload.iat = Date.now();
+            
+            // Codificar em Base64 (simulado)
+            const encodedHeader = btoa(JSON.stringify(header));
+            const encodedPayload = btoa(JSON.stringify(payload));
+            
+            // Em produção, isso seria uma assinatura HMAC
+            const signature = btoa(SECURITY_CONFIG.JWT_SECRET + encodedHeader + encodedPayload);
+            
+            return `${encodedHeader}.${encodedPayload}.${signature}`;
+        }
+
+        function createUserSession(user, token) {
+            const sessionData = {
+                user: {
+                    id: user.id,
+                    username: user.username,
+                    name: user.name,
+                    role: user.role,
+                    email: user.email
+                },
+                token: token,
+                loginTime: Date.now(),
+                lastActivity: Date.now()
+            };
+            
+            // Salvar no localStorage
+            localStorage.setItem("userSession", JSON.stringify(sessionData));
+            
+            // Iniciar timer de sessão
+            startSessionTimer();
+        }
+
+        function createAdminSession(token) {
+            const adminSessionData = {
+                user: {
+                    id: 'admin001',
+                    username: 'admin',
+                    name: usersDatabase.admin.name,
+                    role: 'admin',
+                    email: usersDatabase.admin.email,
+                    isAdmin: true
+                },
+                token: token,
+                loginTime: Date.now(),
+                lastActivity: Date.now()
+            };
+            
+            // Salvar no localStorage
+            localStorage.setItem("adminSession", JSON.stringify(adminSessionData));
+        }
+
+        function startSessionTimer() {
+            // Limpar timer existente
+            if (sessionTimer) {
+                clearInterval(sessionTimer);
+            }
+            
+            // Verificar sessão a cada minuto
+            sessionTimer = setInterval(() => {
+                const sessionData = localStorage.getItem("userSession");
+                if (sessionData) {
+                    const session = JSON.parse(sessionData);
+                    const timeSinceLastActivity = Date.now() - session.lastActivity;
+                    
+                    if (timeSinceLastActivity > SECURITY_CONFIG.SESSION_TIMEOUT) {
+                        // Sessão expirada
+                        localStorage.removeItem("userSession");
+                        clearInterval(sessionTimer);
+                        showNotification('Sessão expirada por inatividade. Faça login novamente.', 'info');
+                    }
+                } else {
+                    clearInterval(sessionTimer);
+                }
+            }, 60000);
+        }
+
+        function checkExistingSession() {
+            const sessionData = localStorage.getItem("userSession");
+            const adminSessionData = localStorage.getItem("adminSession");
+            
+            if (sessionData) {
+                const session = JSON.parse(sessionData);
+                
+                // Verificar se o token ainda é válido
+                if (session.token && validateToken(session.token)) {
+                    // Redirecionar automaticamente
+                    redirectToSimulado(session.token);
+                    return;
+                } else {
+                    // Token inválido ou expirado
+                    localStorage.removeItem("userSession");
+                }
+            }
+            
+            if (adminSessionData) {
+                const adminSession = JSON.parse(adminSessionData);
+                
+                if (adminSession.token && validateToken(adminSession.token)) {
+                    // Redirecionar para painel admin
+                    redirectToAdminPanel(adminSession.token);
+                    return;
+                } else {
+                    localStorage.removeItem("adminSession");
+                }
+            }
+        }
+
+        function validateToken(token) {
+            try {
+                const parts = token.split('.');
+                if (parts.length !== 3) return false;
+                
+                const payload = JSON.parse(atob(parts[1]));
+                
+                // Verificar expiração
+                if (payload.exp && payload.exp < Date.now()) {
+                    return false;
+                }
+                
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        function redirectToSimulado(token) {
+            // Gerar URL segura com token
+            const simuladoURL = `https://cristianmarquesdevx.github.io/simulado-geo-hist/index.html?token=${encodeURIComponent(token)}&auth=secure&ts=${Date.now()}`;
+            
+            showNotification('Login realizado com sucesso! Redirecionando...', 'success');
+            
+            // Redirecionar após breve delay
+            setTimeout(() => {
+                window.location.href = simuladoURL;
+            }, 1500);
+        }
+
+        function redirectToAdminPanel(token) {
+            // Por enquanto, redirecionamos para o simulado com privilégios de admin
+            const adminURL = `https://cristianmarquesdevx.github.io/simulado-geo-hist/index.html?token=${encodeURIComponent(token)}&auth=admin&ts=${Date.now()}`;
+            
+            showNotification('Acesso administrativo concedido! Redirecionando...', 'success');
+            
+            setTimeout(() => {
+                window.location.href = adminURL;
+            }, 1500);
+        }
+
+        function showError(inputElement, errorElementId) {
+            inputElement.classList.add('error');
+            document.getElementById(errorElementId).classList.add('show');
+        }
+
+        function clearError(inputElement, errorElementId) {
+            inputElement.classList.remove('error');
+            document.getElementById(errorElementId).classList.remove('show');
+        }
+
+        function updateAttemptsWarning() {
+            const remaining = SECURITY_CONFIG.MAX_LOGIN_ATTEMPTS - loginAttempts;
+            
+            if (remaining <= 3 && remaining > 0) {
+                attemptsWarning.classList.add('show');
+                remainingAttempts.textContent = remaining;
+            } else {
+                attemptsWarning.classList.remove('show');
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            // Remover notificação existente
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            // Criar nova notificação
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+                <button onclick="this.parentElement.remove()" style="background: none; border: none; color: inherit; cursor: pointer;">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remover automaticamente após 5 segundos
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        // Proteção contra ataques de força bruta
+        window.addEventListener('focus', () => {
+            // Resetar tentativas quando a janela ganha foco
+            if (loginAttempts > 0 && !isLocked) {
+                loginAttempts = 0;
+                localStorage.removeItem("loginAttempts");
+                updateAttemptsWarning();
+            }
+        });
+
+        // Logout remoto (em caso de múltiplas sessões)
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'forceLogout' && e.newValue) {
+                localStorage.removeItem("userSession");
+                localStorage.removeItem("adminSession");
+                showNotification('Sessão encerrada remotamente. Faça login novamente.', 'info');
+            }
+        });
+
+        // Expor funções necessárias globalmente
+        window.showNotification = showNotification;
+    </script>
+</body>
+</html>
